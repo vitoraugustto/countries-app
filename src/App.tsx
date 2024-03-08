@@ -1,9 +1,104 @@
-import { Button } from "@mui/material";
+import { useState } from 'react';
+
+import { ICountry, Status } from '@common/types';
+import { Box, Button, Input } from '@components';
+import { DataGrid } from '@mui/x-data-grid';
+import { fetchCountry } from '@services/countries';
 
 function App() {
+  const [countryName, setCountryName] = useState('');
+  const [countries, setCountries] = useState<ICountry[]>([]);
+  const [status, setStatus] = useState<Status>('idle');
+
+  const dataGridRows = countries.map((country) => {
+    return {
+      id: country.name.common,
+      name: country.name.common,
+      capital: country.capital,
+      currencies: formatCurrencies(country),
+      languages: formatLanguages(country),
+    };
+  });
+
+  const handleFetchCountry = () => {
+    setStatus('pending');
+
+    fetchCountry(countryName)
+      .then((res) => {
+        setStatus('succeeded');
+        setCountries(res.data);
+      })
+      .catch(() => setStatus('failed'));
+  };
+
   return (
-    <Button onClick={() => console.log("Hello World!")}>Hello World!</Button>
+    <Box hCenter vCenter height="100vh" gap="22px">
+      <Box gap="12px" width="90%">
+        <Box flexDirection="row" gap="12px">
+          <Input
+            fullWidth
+            label="Digite o nome do país"
+            value={countryName}
+            onChange={(e) => setCountryName(e.target.value)}
+          />
+          <Button
+            minWidth="130px"
+            loading={status === 'pending'}
+            disabled={status === 'pending'}
+            fullWidth={false}
+            onClick={handleFetchCountry}
+            text="Buscar"
+          />
+        </Box>
+        <DataGrid
+          sx={{ maxHeight: '85vh' }}
+          columns={dataGridColumns}
+          rows={dataGridRows}
+        />
+      </Box>
+    </Box>
   );
 }
+
+const formatCurrencies = (country: ICountry) => {
+  if (country.currencies) {
+    return Object.keys(country.currencies)
+      .map((key) => country.currencies[key].name)
+      .join(', ');
+  } else {
+    return 'N/A';
+  }
+};
+
+const formatLanguages = (country: ICountry) => {
+  if (country.languages) {
+    return Object.values(country.languages).join(', ');
+  } else {
+    return 'N/A';
+  }
+};
+
+const dataGridColumns = [
+  {
+    field: 'name',
+    headerName: 'Nome',
+    width: 200,
+  },
+  {
+    field: 'capital',
+    headerName: 'Capital',
+    width: 200,
+  },
+  {
+    field: 'currencies',
+    headerName: 'Moedas',
+    width: 200,
+  },
+  {
+    field: 'languages',
+    headerName: 'Idiomas',
+    width: 200,
+  },
+];
 
 export default App;
