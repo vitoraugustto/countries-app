@@ -15,7 +15,7 @@ function App() {
       id: country.name.common,
       flag: country.flags.png,
       name: country.name.common,
-      capital: country.capital,
+      capital: formatCapitals(country),
       currencies: formatCurrencies(country),
       languages: formatLanguages(country),
     };
@@ -44,7 +44,6 @@ function App() {
           />
           <Button
             minWidth="130px"
-            loading={status === 'pending'}
             disabled={status === 'pending'}
             fullWidth={false}
             onClick={handleFetchCountry}
@@ -52,8 +51,9 @@ function App() {
           />
         </Box>
         <DataGrid
+          loading={status === 'pending'}
           pageSizeOptions={[5, 10, 25, 50, 100]}
-          autoHeight
+          autoHeight={countries.length === 0 ? true : false}
           slots={{ toolbar: GridToolbar }}
           sx={{ maxHeight: '85vh' }}
           columns={dataGridColumns}
@@ -64,10 +64,21 @@ function App() {
   );
 }
 
+const formatCapitals = (country: ICountry) => {
+  if (country.capital?.length > 0) {
+    return country.capital.join(', ');
+  } else {
+    return 'N/A';
+  }
+};
+
 const formatCurrencies = (country: ICountry) => {
   if (country.currencies) {
     return Object.keys(country.currencies)
-      .map((key) => country.currencies[key].name)
+      .map(
+        (key) =>
+          country.currencies[key].name + ` (${country.currencies[key].symbol})`,
+      )
       .join(', ');
   } else {
     return 'N/A';
