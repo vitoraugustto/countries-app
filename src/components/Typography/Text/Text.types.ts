@@ -10,7 +10,7 @@ export interface IText {
   color?: Color | string;
   letterSpacing?: string | number;
   lineHeight?: string | number;
-  fontFamily?: 'Lato' | 'Titillium Web';
+  fontFamily?: 'Roboto' | 'Titillium Web';
   component?: any;
   style?: SxProps;
   variant?:

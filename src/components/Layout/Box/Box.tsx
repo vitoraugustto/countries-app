@@ -1,5 +1,7 @@
 import { forwardRef } from 'react';
+
 import { Button, Box as MuiBox } from '@mui/material';
+
 import { IBox } from './Box.types';
 
 export const Box = forwardRef<HTMLDivElement, IBox>(
