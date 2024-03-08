@@ -21,5 +21,7 @@ export interface IInput {
   minRows?: string | number;
   maxRows?: string | number;
   helperText?: string;
+  debounceTimeout?: number;
+  debouncedValue?: (value: string) => void;
   style?: CSSProperties;
 }

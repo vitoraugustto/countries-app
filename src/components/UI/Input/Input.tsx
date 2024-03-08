@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import { TextField } from '@mui/material';
 
 import { IInput } from './Input.types';
@@ -20,8 +22,20 @@ export const Input: React.FC<IInput> = ({
   minRows,
   maxRows,
   helperText,
+  debouncedValue,
+  debounceTimeout = 500,
   style,
 }) => {
+  useEffect(() => {
+    if (debouncedValue) {
+      const timeout = setTimeout(() => {
+        debouncedValue(value);
+      }, debounceTimeout);
+      return () => clearTimeout(timeout);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value]);
+
   return (
     <TextField
       InputProps={{
