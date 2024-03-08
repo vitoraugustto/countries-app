@@ -148,14 +148,12 @@ function App() {
                       {country.name.common.toUpperCase()}
                     </Text>
                     <Box>
-                      <Text fontSize="14px">
-                        {`${country.capital?.length > 1 ? 'Capitais' : 'Capital'}:`}
-                      </Text>
-                      <Text fontSize="12px">{formatCapitals(country)}</Text>
+                      <Text fontSize="12px">Capital</Text>
+                      <Text fontSize="14px">{formatCapitals(country)}</Text>
                     </Box>
                     <Box>
-                      <Text fontSize="14px">{`${formatCurrencies(country) ? 'Moedas' : 'Moeda'}: `}</Text>
-                      <Text fontSize="12px">{formatCurrencies(country)}</Text>
+                      <Text fontSize="12px">Moeda:</Text>
+                      <Text fontSize="14px">{formatCurrencies(country)}</Text>
                     </Box>
                   </Box>
                 </Box>
