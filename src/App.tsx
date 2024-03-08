@@ -7,7 +7,7 @@ import {
   formatLanguages,
   unaccent,
 } from '@common/utils';
-import { Box, Input } from '@components';
+import { Box, Input, Text } from '@components';
 import { LinearProgress } from '@mui/material';
 import { DataGrid, GridColDef, GridToolbar, ptBR } from '@mui/x-data-grid';
 import { fetchCountry } from '@services/countries';
@@ -38,8 +38,11 @@ function App() {
   };
 
   return (
-    <Box hCenter vCenter height="100vh" gap="22px">
-      <Box gap="12px" width="90%">
+    <Box gap="32px" p="2%" height="100vh">
+      <Text fontWeight="600" fontFamily="Titillium Web" component="h1">
+        Countries APP
+      </Text>
+      <Box gap="12px">
         <Box flexDirection="row" gap="12px">
           <Input
             debouncedValue={(debouncedValue) => {
@@ -64,7 +67,7 @@ function App() {
           pageSizeOptions={[10, 25, 50, 100]}
           autoHeight={countries.length === 0 ? true : false}
           slots={{ toolbar: GridToolbar, loadingOverlay: LinearProgress }}
-          sx={{ maxHeight: '80vh' }}
+          sx={{ maxHeight: '70vh', minHeight: '70vh' }}
           columns={dataGridColumns}
           rows={dataGridRows}
         />
