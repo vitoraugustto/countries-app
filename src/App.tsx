@@ -11,8 +11,7 @@ import { Box, Button, Input, Text } from '@components';
 import { LinearProgress, ThemeProvider } from '@mui/material';
 import { DataGrid, GridColDef, GridToolbar, ptBR } from '@mui/x-data-grid';
 import { fetchCountry } from '@services/countries';
-
-import { defaultTheme } from './theme';
+import { defaultTheme } from '@theme';
 
 function App() {
   const [countryName, setCountryName] = useState('');
