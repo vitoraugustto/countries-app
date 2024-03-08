@@ -1,4 +1,5 @@
 import { TextField } from '@mui/material';
+
 import { IInput } from './Input.types';
 
 export const Input: React.FC<IInput> = ({
@@ -18,6 +19,7 @@ export const Input: React.FC<IInput> = ({
   variant,
   minRows,
   maxRows,
+  helperText,
   style,
 }) => {
   return (
@@ -42,6 +44,7 @@ export const Input: React.FC<IInput> = ({
       margin="normal"
       minRows={minRows}
       maxRows={maxRows}
+      helperText={helperText}
       style={{ margin: 0 }}
     />
   );

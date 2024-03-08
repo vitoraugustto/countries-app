@@ -20,5 +20,6 @@ export interface IInput {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   minRows?: string | number;
   maxRows?: string | number;
+  helperText?: string;
   style?: CSSProperties;
 }
