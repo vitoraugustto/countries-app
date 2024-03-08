@@ -7,7 +7,8 @@ import {
   formatLanguages,
   unaccent,
 } from '@common/utils';
-import { Box, Button, Input } from '@components';
+import { Box, Input } from '@components';
+import { LinearProgress } from '@mui/material';
 import { DataGrid, GridColDef, GridToolbar, ptBR } from '@mui/x-data-grid';
 import { fetchCountry } from '@services/countries';
 
@@ -27,10 +28,10 @@ function App() {
     };
   });
 
-  const handleFetchCountry = () => {
+  const handleFetchCountry = (_countryName: string) => {
     setStatus('pending');
 
-    fetchCountry(unaccent(countryName))
+    fetchCountry(unaccent(_countryName))
       .then((res) => {
         setStatus('succeeded');
         setCountries(res.data);
@@ -43,18 +44,16 @@ function App() {
       <Box gap="12px" width="90%">
         <Box flexDirection="row" gap="12px">
           <Input
+            debouncedValue={(debouncedValue) => {
+              if (!debouncedValue) return;
+              handleFetchCountry(debouncedValue);
+            }}
+            endAdornment
             fullWidth
-            label="Digite o nome do país"
+            label="Nome do país"
             value={countryName}
             onChange={(e) => setCountryName(e.target.value)}
             helperText={`Alguns países podem não aparecer se procurados em português. Exemplo: Cazaquistão (Kazakhstan)`}
-          />
-          <Button
-            minWidth="130px"
-            disabled={status === 'pending'}
-            fullWidth={false}
-            onClick={handleFetchCountry}
-            text="Buscar"
           />
         </Box>
         <DataGrid
@@ -63,8 +62,8 @@ function App() {
           loading={status === 'pending'}
           pageSizeOptions={[5, 10, 25, 50, 100]}
           autoHeight={countries.length === 0 ? true : false}
-          slots={{ toolbar: GridToolbar }}
-          sx={{ maxHeight: '85vh' }}
+          slots={{ toolbar: GridToolbar, loadingOverlay: LinearProgress }}
+          sx={{ maxHeight: '80vh' }}
           columns={dataGridColumns}
           rows={dataGridRows}
         />
