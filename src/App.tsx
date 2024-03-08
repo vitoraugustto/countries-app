@@ -65,7 +65,6 @@ function App() {
           localeText={dataGridLocaleText}
           loading={status === 'pending'}
           pageSizeOptions={[10, 25, 50, 100]}
-          autoHeight={countries.length === 0 ? true : false}
           slots={{ toolbar: GridToolbar, loadingOverlay: LinearProgress }}
           sx={{ maxHeight: '70vh', minHeight: '70vh' }}
           columns={dataGridColumns}
