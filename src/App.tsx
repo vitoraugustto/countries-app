@@ -94,8 +94,9 @@ const dataGridLocaleText = {
 
 const dataGridColumns: GridColDef[] = [
   {
-    field: 'flags',
+    field: 'flag',
     headerName: 'Bandeira',
+    sortable: false,
     width: 100,
     disableReorder: true,
     disableColumnMenu: true,
