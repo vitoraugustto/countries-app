@@ -44,7 +44,7 @@ function App() {
   };
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Box gap="20px" p="2%" height="100vh">
+      <Box gap="20px" p="2%" minHeight="100vh">
         <Box gap="24px">
           <Box gap="4px">
             <Text fontSize="14px" fontFamily="Titillium Web">
@@ -121,7 +121,9 @@ function App() {
                     boxShadow:
                       'rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;',
                     ':hover': {
-                      transform: 'scale(1.2)',
+                      transform: 'scale(1.1)',
+                      boxShadow:
+                        'rgba(0, 0, 0, 0.37) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;',
                     },
                   }}
                   width="200px"
@@ -141,10 +143,20 @@ function App() {
                       alt={`Bandeira do país ${country.name.common}`}
                     />
                   </Box>
-                  <Box p="4px">
+                  <Box gap="4px" p="4px">
                     <Text align="center" fontFamily="Titillium Web">
                       {country.name.common.toUpperCase()}
                     </Text>
+                    <Box>
+                      <Text fontSize="14px">
+                        {`${country.capital?.length > 1 ? 'Capitais' : 'Capital'}:`}
+                      </Text>
+                      <Text fontSize="12px">{formatCapitals(country)}</Text>
+                    </Box>
+                    <Box>
+                      <Text fontSize="14px">{`${formatCurrencies(country) ? 'Moedas' : 'Moeda'}: `}</Text>
+                      <Text fontSize="12px">{formatCurrencies(country)}</Text>
+                    </Box>
                   </Box>
                 </Box>
               ))}
