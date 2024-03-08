@@ -21,6 +21,7 @@ function App() {
     id: country.name.common,
     flag: country.flags.png,
     name: country.name.common,
+    population: country.population,
     capital: formatCapitals(country),
     currencies: formatCurrencies(country),
     languages: formatLanguages(country),
@@ -36,7 +37,6 @@ function App() {
       })
       .catch(() => setStatus('failed'));
   };
-
   return (
     <Box gap="32px" p="2%" height="100vh">
       <Text fontWeight="600" fontFamily="Titillium Web" component="h1">
@@ -57,11 +57,18 @@ function App() {
             helperText={`Alguns países podem não aparecer se procurados em português. Exemplo: Cazaquistão (Kazakhstan)`}
           />
         </Box>
+
         <DataGrid
           initialState={{
             pagination: { paginationModel: { pageSize: 10 } },
           }}
+          slotProps={{
+            toolbar: {
+              csvOptions,
+            },
+          }}
           rowSelection={false}
+          onRowClick={(params) => console.log(params)}
           localeText={dataGridLocaleText}
           loading={status === 'pending'}
           pageSizeOptions={[10, 25, 50, 100]}
@@ -74,6 +81,11 @@ function App() {
     </Box>
   );
 }
+
+const csvOptions = {
+  fileName: 'bd-paises',
+  fields: ['name', 'capital', 'population', 'currencies', 'languages'],
+};
 
 const dataGridLocaleText = {
   ...ptBR.components.MuiDataGrid.defaultProps.localeText,
@@ -106,6 +118,11 @@ const dataGridColumns: GridColDef[] = [
   {
     field: 'capital',
     headerName: 'Capital',
+    width: 200,
+  },
+  {
+    field: 'population',
+    headerName: 'População',
     width: 200,
   },
   {
