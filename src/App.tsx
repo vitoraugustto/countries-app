@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { ICountry, Status } from '@common/types';
 import { Box, Button, Input } from '@components';
-import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid';
+import { DataGrid, GridColDef, GridToolbar, ptBR } from '@mui/x-data-grid';
 import { fetchCountry } from '@services/countries';
 
 function App() {
@@ -51,6 +51,7 @@ function App() {
           />
         </Box>
         <DataGrid
+          localeText={dataGridLocaleText}
           loading={status === 'pending'}
           pageSizeOptions={[5, 10, 25, 50, 100]}
           autoHeight={countries.length === 0 ? true : false}
@@ -63,6 +64,11 @@ function App() {
     </Box>
   );
 }
+
+const dataGridLocaleText = {
+  ...ptBR.components.MuiDataGrid.defaultProps.localeText,
+  columnMenuManageColumns: 'Gerenciar colunas',
+};
 
 const formatCapitals = (country: ICountry) => {
   if (country.capital?.length > 0) {
