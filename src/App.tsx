@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { ICountry, Status } from '@common/types';
 import { Box, Button, Input } from '@components';
-import { DataGrid, GridToolbar } from '@mui/x-data-grid';
+import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid';
 import { fetchCountry } from '@services/countries';
 
 function App() {
@@ -13,6 +13,7 @@ function App() {
   const dataGridRows = countries.map((country) => {
     return {
       id: country.name.common,
+      flag: country.flags.png,
       name: country.name.common,
       capital: country.capital,
       currencies: formatCurrencies(country),
@@ -51,6 +52,7 @@ function App() {
           />
         </Box>
         <DataGrid
+          pageSizeOptions={[5, 10, 25, 50, 100]}
           autoHeight
           slots={{ toolbar: GridToolbar }}
           sx={{ maxHeight: '85vh' }}
@@ -80,7 +82,24 @@ const formatLanguages = (country: ICountry) => {
   }
 };
 
-const dataGridColumns = [
+const dataGridColumns: GridColDef[] = [
+  {
+    field: 'flags',
+    headerName: 'Bandeira',
+    width: 100,
+    disableReorder: true,
+    disableColumnMenu: true,
+    filterable: false,
+    renderCell: (params) => {
+      return (
+        <img
+          src={params.row.flag}
+          width="70%"
+          alt={`Bandeira do país ${params.row.name}`}
+        />
+      );
+    },
+  },
   {
     field: 'name',
     headerName: 'Nome',
