@@ -1,6 +1,12 @@
 import { useState } from 'react';
 
 import { ICountry, Status } from '@common/types';
+import {
+  formatCapitals,
+  formatCurrencies,
+  formatLanguages,
+  unaccent,
+} from '@common/utils';
 import { Box, Button, Input } from '@components';
 import { DataGrid, GridColDef, GridToolbar, ptBR } from '@mui/x-data-grid';
 import { fetchCountry } from '@services/countries';
@@ -24,7 +30,7 @@ function App() {
   const handleFetchCountry = () => {
     setStatus('pending');
 
-    fetchCountry(countryName)
+    fetchCountry(unaccent(countryName))
       .then((res) => {
         setStatus('succeeded');
         setCountries(res.data);
@@ -68,35 +74,6 @@ function App() {
 const dataGridLocaleText = {
   ...ptBR.components.MuiDataGrid.defaultProps.localeText,
   columnMenuManageColumns: 'Gerenciar colunas',
-};
-
-const formatCapitals = (country: ICountry) => {
-  if (country.capital?.length > 0) {
-    return country.capital.join(', ');
-  } else {
-    return 'N/A';
-  }
-};
-
-const formatCurrencies = (country: ICountry) => {
-  if (country.currencies) {
-    return Object.keys(country.currencies)
-      .map(
-        (key) =>
-          country.currencies[key].name + ` (${country.currencies[key].symbol})`,
-      )
-      .join(', ');
-  } else {
-    return 'N/A';
-  }
-};
-
-const formatLanguages = (country: ICountry) => {
-  if (country.languages) {
-    return Object.values(country.languages).join(', ');
-  } else {
-    return 'N/A';
-  }
 };
 
 const dataGridColumns: GridColDef[] = [
