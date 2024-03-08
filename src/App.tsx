@@ -47,6 +47,7 @@ function App() {
             label="Digite o nome do país"
             value={countryName}
             onChange={(e) => setCountryName(e.target.value)}
+            helperText={`Alguns países podem não aparecer se procurados em português. Exemplo: Cazaquistão (Kazakhstan)`}
           />
           <Button
             minWidth="130px"
@@ -57,6 +58,7 @@ function App() {
           />
         </Box>
         <DataGrid
+          rowSelection={false}
           localeText={dataGridLocaleText}
           loading={status === 'pending'}
           pageSizeOptions={[5, 10, 25, 50, 100]}
