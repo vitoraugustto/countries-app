@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { ICountry, Status } from '@common/types';
 import { Box, Button, Input } from '@components';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { fetchCountry } from '@services/countries';
 
 function App() {
@@ -51,6 +51,8 @@ function App() {
           />
         </Box>
         <DataGrid
+          autoHeight
+          slots={{ toolbar: GridToolbar }}
           sx={{ maxHeight: '85vh' }}
           columns={dataGridColumns}
           rows={dataGridRows}
