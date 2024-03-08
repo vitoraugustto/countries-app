@@ -44,7 +44,7 @@ function App() {
   };
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Box gap="20px" p="2%" minHeight="100vh">
+      <Box gap="20px" p="2%" height="100vh">
         <Box gap="24px">
           <Box gap="4px">
             <Text fontSize="14px" fontFamily="Titillium Web">
