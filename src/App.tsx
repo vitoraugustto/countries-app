@@ -73,7 +73,6 @@ function App() {
                 if (!debouncedValue) return;
                 handleFetchCountry(debouncedValue);
               }}
-              endAdornment
               fullWidth
               label="Nome do país"
               value={countryName}
@@ -104,13 +103,14 @@ function App() {
             />
           ) : (
             <Box
-              gap="28px"
               hCenter
+              gap="28px"
               flexDirection="row"
               style={{ flexWrap: 'wrap' }}
             >
               {countries.map((country) => (
                 <Box
+                  key={country.name.common}
                   p="0px"
                   onClick={() => console.log(country)}
                   borderRadius="8px"
@@ -142,12 +142,7 @@ function App() {
                     />
                   </Box>
                   <Box p="4px">
-                    <Text
-                      align="center"
-                      fontFamily="Titillium Web"
-                      fontSize="18px"
-                      fontWeight="600"
-                    >
+                    <Text align="center" fontFamily="Titillium Web">
                       {country.name.common.toUpperCase()}
                     </Text>
                   </Box>
