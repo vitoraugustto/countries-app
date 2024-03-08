@@ -7,6 +7,7 @@ export interface IButton {
   variant?: 'text' | 'contained' | 'outlined';
   disabled?: boolean;
   borderRadius?: number | string;
+  minWidth?: number | string;
   minHeight?: number | string;
   maxHeight?: number | string;
   fullWidth?: boolean;
