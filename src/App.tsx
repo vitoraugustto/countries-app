@@ -17,16 +17,14 @@ function App() {
   const [countries, setCountries] = useState<ICountry[]>([]);
   const [status, setStatus] = useState<Status>('idle');
 
-  const dataGridRows = countries.map((country) => {
-    return {
-      id: country.name.common,
-      flag: country.flags.png,
-      name: country.name.common,
-      capital: formatCapitals(country),
-      currencies: formatCurrencies(country),
-      languages: formatLanguages(country),
-    };
-  });
+  const dataGridRows = countries.map((country) => ({
+    id: country.name.common,
+    flag: country.flags.png,
+    name: country.name.common,
+    capital: formatCapitals(country),
+    currencies: formatCurrencies(country),
+    languages: formatLanguages(country),
+  }));
 
   const handleFetchCountry = (_countryName: string) => {
     setStatus('pending');
@@ -57,10 +55,13 @@ function App() {
           />
         </Box>
         <DataGrid
+          initialState={{
+            pagination: { paginationModel: { pageSize: 10 } },
+          }}
           rowSelection={false}
           localeText={dataGridLocaleText}
           loading={status === 'pending'}
-          pageSizeOptions={[5, 10, 25, 50, 100]}
+          pageSizeOptions={[10, 25, 50, 100]}
           autoHeight={countries.length === 0 ? true : false}
           slots={{ toolbar: GridToolbar, loadingOverlay: LinearProgress }}
           sx={{ maxHeight: '80vh' }}
