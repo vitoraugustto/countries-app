@@ -1,4 +1,4 @@
-import { Button as MuiButton } from '@mui/material';
+import { CircularProgress, Button as MuiButton } from '@mui/material';
 
 import { IButton } from './Button.types';
 
@@ -41,7 +41,7 @@ export const Button: React.FC<IButton> = ({
       variant={variant}
       onClick={onClick}
     >
-      {loading ? 'Carregando' : text}
+      {loading ? <CircularProgress style={{ color: 'white' }} /> : text}
     </MuiButton>
   );
 };
