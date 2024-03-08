@@ -76,7 +76,13 @@ function App() {
               fullWidth
               label="Nome do país"
               value={countryName}
-              onChange={(e) => setCountryName(e.target.value)}
+              onChange={(e) => {
+                if (countries.length > 0) {
+                  setCountries([]);
+                }
+
+                setCountryName(e.target.value);
+              }}
               helperText={`Alguns países podem não aparecer se procurados em português. Exemplo: Cazaquistão (Kazakhstan)`}
             />
           </Box>
@@ -127,7 +133,6 @@ function App() {
                     },
                   }}
                   width="200px"
-                  height="250px"
                   backgroundColor="white"
                 >
                   <Box
@@ -154,6 +159,14 @@ function App() {
                     <Box>
                       <Text fontSize="12px">Moeda:</Text>
                       <Text fontSize="14px">{formatCurrencies(country)}</Text>
+                    </Box>
+                    <Box>
+                      <Text fontSize="12px">População:</Text>
+                      <Text fontSize="14px">{country.population}</Text>
+                    </Box>
+                    <Box>
+                      <Text fontSize="12px">Idioma:</Text>
+                      <Text fontSize="14px">{formatLanguages(country)}</Text>
                     </Box>
                   </Box>
                 </Box>
