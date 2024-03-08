@@ -8,7 +8,7 @@ export type Status = 'succeeded' | 'failed' | 'idle' | 'pending';
 
 export interface ICountry {
   altSpellings: string[];
-  capital: string;
+  capital: string[];
   currencies: {
     [key: string]: {
       name: string;
