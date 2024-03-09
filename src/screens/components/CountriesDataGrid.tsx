@@ -42,7 +42,7 @@ export const CountriesDataGrid: React.FC<{
       loading={status === 'pending'}
       pageSizeOptions={[10, 25, 50, 100]}
       slots={{ toolbar: GridToolbar, loadingOverlay: LinearProgress }}
-      sx={{ maxHeight: '70vh', minHeight: '70vh' }}
+      sx={{ maxHeight: '65vh', minHeight: '65vh' }}
       columns={dataGridColumns}
       rows={dataGridRows}
     />
