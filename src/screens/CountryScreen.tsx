@@ -18,7 +18,6 @@ export const CountryScreen = () => {
   const [country, setCountry] = useState<ICountry>();
   const [completionStatus, setCompletionStatus] = useState<Status>('idle');
   const [countryStatus, setCountryStatus] = useState<Status>('idle');
-
   const [countryCuriosities, setCountryCuriosities] = useState<string | null>(
     '',
   );
@@ -43,6 +42,8 @@ export const CountryScreen = () => {
           setCountryCuriosities(res.choices[0].message.content);
         })
         .catch(() => setCompletionStatus('failed'));
+    } else {
+      setCompletionStatus('failed');
     }
   };
 
@@ -69,10 +70,15 @@ export const CountryScreen = () => {
     <Box>
       <Box hCenter vCenter gap="20px" p="2%" height="100vh">
         <Box gap="12px" width="60%">
-          {countryCuriosities === 'pending' ||
-          countryCuriosities === 'failed' ? (
-            <CountrySkeleton countryStatus={countryStatus} />
-          ) : (
+          {(countryStatus === 'pending' || countryStatus === 'failed') && (
+            <CountrySkeleton />
+          )}
+          {countryStatus === 'failed' && (
+            <Text color="error">
+              Falha ao carregar país. Por favor, tente novamente mais tarde.
+            </Text>
+          )}
+          {countryStatus === 'succeeded' && (
             <Box gap="28px" flexDirection="row">
               <Box vCenter gap="8px">
                 <Text align="center" component="h1" variant="h1">
@@ -130,9 +136,7 @@ export const CountryScreen = () => {
   );
 };
 
-const CountrySkeleton: React.FC<{ countryStatus: Status }> = ({
-  countryStatus,
-}) => {
+const CountrySkeleton = () => {
   return (
     <Box gap="28px" flexDirection="row">
       <Box hCenter gap="8px">
@@ -158,9 +162,6 @@ const CountrySkeleton: React.FC<{ countryStatus: Status }> = ({
           <Skeleton variant="text" width="130px" height="32px" />
         </Box>
       </Box>
-      <Text color="error">
-        Falha ao carregar país. Por favor, tente novamente mais tarde.
-      </Text>
     </Box>
   );
 };
