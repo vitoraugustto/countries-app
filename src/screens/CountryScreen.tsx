@@ -81,28 +81,22 @@ export const CountryScreen = () => {
           </Box>
           <Divider orientation="vertical" />
           <Box gap="12px">
-            <Box>
-              <Text fontWeight="600">Capital</Text>
-              <Text fontSize="24px">
-                {country ? formatCapitals(country) : '-'}
-              </Text>
-            </Box>
-            <Box>
-              <Text fontWeight="600">População</Text>
-              <Text fontSize="24px">{country ? country?.population : '-'}</Text>
-            </Box>
-            <Box>
-              <Text fontWeight="600">Moeda</Text>
-              <Text fontSize="24px">
-                {country ? formatCurrencies(country) : '-'}
-              </Text>
-            </Box>
-            <Box>
-              <Text fontWeight="600">Idioma</Text>
-              <Text fontSize="24px">
-                {country ? formatLanguages(country) : '-'}
-              </Text>
-            </Box>
+            <CountryInfo
+              title="Capital"
+              text={country ? formatCapitals(country) : '-'}
+            />
+            <CountryInfo
+              title="População"
+              text={country ? country?.population : '-'}
+            />
+            <CountryInfo
+              title="Moeda"
+              text={country ? formatCurrencies(country) : '-'}
+            />
+            <CountryInfo
+              title="Idioma"
+              text={country ? formatLanguages(country) : '-'}
+            />
           </Box>
         </Box>
         <Box gap="12px">
@@ -125,6 +119,18 @@ export const CountryScreen = () => {
           )}
         </Box>
       </Box>
+    </Box>
+  );
+};
+
+const CountryInfo: React.FC<{ title: string; text: string | number }> = ({
+  title,
+  text,
+}) => {
+  return (
+    <Box>
+      <Text fontWeight="600">{title}</Text>
+      <Text fontSize="24px">{text}</Text>
     </Box>
   );
 };
