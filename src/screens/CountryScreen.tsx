@@ -68,7 +68,7 @@ export const CountryScreen = () => {
 
   return (
     <Box>
-      <Box hCenter vCenter gap="20px" p="2%" height="100vh">
+      <Box hCenter vCenter gap="20px" p="2%" minHeight="100vh">
         <Box gap="12px" width="60%">
           {(countryStatus === 'pending' || countryStatus === 'failed') && (
             <CountrySkeleton />
