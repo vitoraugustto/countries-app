@@ -13,6 +13,7 @@ export default defineConfig({
       '@common': path.resolve(__dirname, './src/common/'),
       '@theme': path.resolve(__dirname, './src/theme'),
       '@screens': path.resolve(__dirname, './src/screens/'),
+      '@config': path.resolve(__dirname, './src/config/'),
     },
   },
 });
