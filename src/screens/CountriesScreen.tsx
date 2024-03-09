@@ -10,8 +10,9 @@ import {
   unaccent,
 } from '@common/utils';
 import { Box, Button, Input, Text } from '@components';
+import HistoryIcon from '@mui/icons-material/History';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import { LinearProgress } from '@mui/material';
+import { Chip, LinearProgress } from '@mui/material';
 import { DataGrid, GridColDef, GridToolbar, ptBR } from '@mui/x-data-grid';
 import { fetchCountry } from '@services/countries';
 
@@ -24,6 +25,8 @@ export const CountriesScreen = () => {
   const [presentationMode, setPresentationMode] = useState<'grid' | 'card'>(
     'grid',
   );
+
+  const history = JSON.parse(localStorage.getItem('history') ?? '[]');
 
   const dataGridRows = countries.map((country) => ({
     id: country.name.common,
@@ -69,10 +72,44 @@ export const CountriesScreen = () => {
             />
           </Box>
         </Box>
+        <Box flexDirection="row" vCenter gap="14px">
+          <HistoryIcon color="info" />
+          {history.map((historyItem: string) => (
+            <Chip
+              color="info"
+              variant="outlined"
+              onClick={() => handleFetchCountry(historyItem)}
+              label={historyItem}
+              onDelete={() => {
+                const index = history.indexOf(historyItem);
+
+                if (index > -1) {
+                  history.splice(index, 1);
+
+                  localStorage.setItem('history', JSON.stringify(history));
+                }
+              }}
+            />
+          ))}
+        </Box>
         <Box flexDirection="row" gap="12px">
           <Input
             debouncedValue={(debouncedValue) => {
               if (!debouncedValue) return;
+
+              const history = JSON.parse(
+                localStorage.getItem('history') ?? '[]',
+              );
+
+              if (history.length === 5) {
+                history.pop();
+              }
+
+              localStorage.setItem(
+                'history',
+                JSON.stringify([debouncedValue, ...history]),
+              );
+
               handleFetchCountry(debouncedValue);
             }}
             fullWidth
