@@ -79,7 +79,7 @@ export const CountryScreen = () => {
             </Text>
           )}
           {countryStatus === 'succeeded' && (
-            <Box gap="28px" flexDirection="row">
+            <Box gap="48px" flexDirection="row">
               <Box vCenter gap="8px">
                 <Text align="center" component="h1" variant="h1">
                   {country?.name.common}
@@ -90,7 +90,6 @@ export const CountryScreen = () => {
                   alt={`Bandeira do país ${country?.name.common}`}
                 />
               </Box>
-              <Divider orientation="vertical" />
               <Box gap="12px">
                 <CountryInfo
                   title="Capital"
@@ -139,12 +138,11 @@ export const CountryScreen = () => {
 
 const CountrySkeleton = () => {
   return (
-    <Box gap="28px" flexDirection="row">
+    <Box gap="48px" flexDirection="row">
       <Box hCenter gap="8px">
         <Skeleton variant="text" width="85px" height="34px" />
         <Skeleton variant="rounded" width="320px" height="230px" />
       </Box>
-      <Divider orientation="vertical" />
       <Box gap="12px">
         <Box>
           <Skeleton variant="text" width="65px" height="24px" />
