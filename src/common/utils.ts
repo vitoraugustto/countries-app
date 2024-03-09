@@ -1,3 +1,4 @@
+import { useMediaQuery, useTheme } from '@mui/material';
 import { ICountry } from './types';
 
 export const unaccent = (str: string) =>
@@ -50,4 +51,10 @@ export const decode = (uri: string) => {
     .replace(/%2C/g, ',');
 
   return decodeURIComponent(uri);
+};
+
+export const useMobile = () => {
+  const theme = useTheme();
+
+  return useMediaQuery(theme.breakpoints.down('md'));
 };
