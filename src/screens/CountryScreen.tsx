@@ -10,17 +10,28 @@ import {
 } from '@common/utils';
 import { Box, Text } from '@components';
 import { Divider } from '@mui/material';
-import { fetchCountry } from '@services/countries';
+import { fetchCountry, generateCountryCuriosities } from '@services/countries';
 
 export const CountryScreen = () => {
   const location = useParams() as { countryName: string };
   const [country, setCountry] = useState<ICountry>();
+  const [countryCuriosities, setCountryCuriosities] = useState<string | null>(
+    '',
+  );
 
   useEffect(() => {
     fetchCountry(decode(location.countryName), true).then((res) =>
       setCountry(res.data[0]),
     );
   }, []);
+
+  useEffect(() => {
+    if (country) {
+      generateCountryCuriosities(country.name.common).then((res) =>
+        setCountryCuriosities(res.choices[0].message.content),
+      );
+    }
+  }, [country]);
 
   return (
     <Box hCenter vCenter gap="20px" p="2%" height="100vh">
@@ -63,12 +74,8 @@ export const CountryScreen = () => {
           </Box>
         </Box>
         <Box>
-          <Text fontWeight="600">Fatos</Text>
-          <Text fontSize="24px">...</Text>
-        </Box>
-        <Box>
           <Text fontWeight="600">Curiosidades</Text>
-          <Text fontSize="24px">...</Text>
+          <Text fontSize="18px">{countryCuriosities}</Text>
         </Box>
       </Box>
     </Box>
