@@ -66,69 +66,73 @@ export const CountryScreen = () => {
   }, [country]);
 
   return (
-    <Box hCenter vCenter gap="20px" p="2%" height="100vh">
-      <Box gap="12px" width="60%">
-        {countryStatus === 'pending' ? (
-          <CountrySkeleton />
-        ) : (
-          <Box gap="28px" flexDirection="row">
-            <Box vCenter gap="8px">
-              <Text align="center" component="h1" variant="h1">
-                {country?.name.common}
-              </Text>
-              <img
-                style={{ borderRadius: '10px' }}
-                src={country?.flags.png}
-                alt={`Bandeira do país ${country?.name.common}`}
-              />
+    <Box>
+      <Box hCenter vCenter gap="20px" p="2%" height="100vh">
+        <Box gap="12px" width="60%">
+          {countryCuriosities === 'pending' ||
+          countryCuriosities === 'failed' ? (
+            <CountrySkeleton countryStatus={countryStatus} />
+          ) : (
+            <Box gap="28px" flexDirection="row">
+              <Box vCenter gap="8px">
+                <Text align="center" component="h1" variant="h1">
+                  {country?.name.common}
+                </Text>
+                <img
+                  style={{ borderRadius: '10px' }}
+                  src={country?.flags.png}
+                  alt={`Bandeira do país ${country?.name.common}`}
+                />
+              </Box>
+              <Divider orientation="vertical" />
+              <Box gap="12px">
+                <CountryInfo
+                  title="Capital"
+                  text={country ? formatCapitals(country) : '-'}
+                />
+                <CountryInfo
+                  title="População"
+                  text={country ? country?.population : '-'}
+                />
+                <CountryInfo
+                  title="Moeda"
+                  text={country ? formatCurrencies(country) : '-'}
+                />
+                <CountryInfo
+                  title="Idioma"
+                  text={country ? formatLanguages(country) : '-'}
+                />
+              </Box>
             </Box>
-            <Divider orientation="vertical" />
-            <Box gap="12px">
-              <CountryInfo
-                title="Capital"
-                text={country ? formatCapitals(country) : '-'}
-              />
-              <CountryInfo
-                title="População"
-                text={country ? country?.population : '-'}
-              />
-              <CountryInfo
-                title="Moeda"
-                text={country ? formatCurrencies(country) : '-'}
-              />
-              <CountryInfo
-                title="Idioma"
-                text={country ? formatLanguages(country) : '-'}
-              />
-            </Box>
-          </Box>
-        )}
-
-        <Box gap="12px">
-          <Box vCenter flexDirection="row" gap="10px">
-            <Text fontWeight="600">Curiosidades</Text>
-            {completionStatus === 'pending' && (
-              <CircularProgress size={20} thickness={5} />
-            )}
-            {completionStatus === 'succeeded' && (
-              <Chip color="success" label="🤖 Gerado com IA" />
-            )}
-            {completionStatus === 'failed' && <CancelIcon color="error" />}
-          </Box>
-          <Text fontSize="18px">{handleCuriosities()}</Text>
-          {completionStatus === 'succeeded' && (
-            <Text fontSize="14px" color="gray" fontFamily="Titillium Web">
-              IA pode cometer erros. Considere verificar informações
-              importantes.
-            </Text>
           )}
+
+          <Box gap="12px">
+            <Box vCenter flexDirection="row" gap="10px">
+              <Text fontWeight="600">Curiosidades</Text>
+              {completionStatus === 'pending' && (
+                <CircularProgress size={20} thickness={5} />
+              )}
+              {completionStatus === 'succeeded' && (
+                <Chip color="success" label="🤖 Gerado com IA" />
+              )}
+              {completionStatus === 'failed' && <CancelIcon color="error" />}
+            </Box>
+            <Text fontSize="18px">{handleCuriosities()}</Text>
+          </Box>
         </Box>
       </Box>
+      {completionStatus === 'succeeded' && (
+        <Text fontSize="14px" color="gray" fontFamily="Titillium Web">
+          IA pode cometer erros. Considere verificar informações importantes.
+        </Text>
+      )}
     </Box>
   );
 };
 
-const CountrySkeleton = () => {
+const CountrySkeleton: React.FC<{ countryStatus: Status }> = ({
+  countryStatus,
+}) => {
   return (
     <Box gap="28px" flexDirection="row">
       <Box hCenter gap="8px">
@@ -154,6 +158,9 @@ const CountrySkeleton = () => {
           <Skeleton variant="text" width="130px" height="32px" />
         </Box>
       </Box>
+      <Text color="error">
+        Falha ao carregar país. Por favor, tente novamente mais tarde.
+      </Text>
     </Box>
   );
 };
