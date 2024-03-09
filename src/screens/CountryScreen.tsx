@@ -124,14 +124,15 @@ export const CountryScreen = () => {
               {completionStatus === 'failed' && <CancelIcon color="error" />}
             </Box>
             <Text fontSize="18px">{handleCuriosities()}</Text>
+            {completionStatus === 'succeeded' && (
+              <Text fontSize="14px" color="gray" fontFamily="Titillium Web">
+                IA pode cometer erros. Considere verificar informações
+                importantes.
+              </Text>
+            )}
           </Box>
         </Box>
       </Box>
-      {completionStatus === 'succeeded' && (
-        <Text fontSize="14px" color="gray" fontFamily="Titillium Web">
-          IA pode cometer erros. Considere verificar informações importantes.
-        </Text>
-      )}
     </Box>
   );
 };
