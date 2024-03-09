@@ -31,3 +31,23 @@ export const formatLanguages = (country: ICountry) => {
     return 'N/A';
   }
 };
+
+export const encode = (uri: string) => {
+  uri = uri
+    .replace(/\(/g, '%28')
+    .replace(/\)/g, '%29')
+    .replace(/-/g, '%2D')
+    .replace(/,/g, '%2C');
+
+  return encodeURIComponent(uri);
+};
+
+export const decode = (uri: string) => {
+  uri = uri
+    .replace(/%28/g, '(')
+    .replace(/%29/g, ')')
+    .replace(/%2D/g, '-')
+    .replace(/%2C/g, ',');
+
+  return decodeURIComponent(uri);
+};
