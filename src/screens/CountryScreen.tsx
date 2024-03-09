@@ -31,6 +31,7 @@ export const CountryScreen = () => {
               {country?.name.common}
             </Text>
             <img
+              style={{ borderRadius: '10px' }}
               src={country?.flags.png}
               alt={`Bandeira do país ${country?.name.common}`}
             />
