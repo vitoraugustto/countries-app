@@ -120,6 +120,8 @@ export const CountriesScreen = () => {
 };
 
 const CountryCards: React.FC<{ countries: ICountry[] }> = ({ countries }) => {
+  const navigate = useNavigate();
+
   return (
     <Box hCenter gap="28px" flexDirection="row" style={{ flexWrap: 'wrap' }}>
       {countries.length > 0 ? (
@@ -127,7 +129,7 @@ const CountryCards: React.FC<{ countries: ICountry[] }> = ({ countries }) => {
           <Box
             key={country.name.common}
             p="0px"
-            onClick={() => console.log(country)}
+            onClick={() => navigate(`/paises/${encode(country.name.common)}`)}
             borderRadius="8px"
             style={{
               textAlign: 'left',
