@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { IBox } from 'src/components/Layout/Box/Box.types';
 
 import { ICountry, Status } from '@common/types';
 import {
@@ -7,20 +8,30 @@ import {
   formatCapitals,
   formatCurrencies,
   formatLanguages,
+  useMobile,
 } from '@common/utils';
 import { Box, Text } from '@components';
 import CancelIcon from '@mui/icons-material/Cancel';
-import { Chip, CircularProgress, Divider, Skeleton } from '@mui/material';
+import { Chip, CircularProgress, Skeleton } from '@mui/material';
 import { fetchCountry, generateCountryCuriosities } from '@services/countries';
 
 export const CountryScreen = () => {
   const location = useParams() as { countryName: string };
+  const isMobile = useMobile();
+
   const [country, setCountry] = useState<ICountry>();
   const [completionStatus, setCompletionStatus] = useState<Status>('idle');
   const [countryStatus, setCountryStatus] = useState<Status>('idle');
   const [countryCuriosities, setCountryCuriosities] = useState<string | null>(
     '',
   );
+
+  const responsive: IBox = {
+    flexDirection: isMobile ? 'column' : 'row',
+    width: isMobile ? '100%' : '60%',
+    p: isMobile ? '6%' : '2%',
+    gap: isMobile ? '12px' : '48px',
+  };
 
   const handleFetchCountry = () => {
     setCountryStatus('pending');
@@ -68,10 +79,10 @@ export const CountryScreen = () => {
 
   return (
     <Box>
-      <Box hCenter vCenter gap="20px" p="2%" minHeight="100vh">
-        <Box gap="12px" width="60%">
+      <Box hCenter vCenter gap="20px" p={responsive.p} minHeight="100vh">
+        <Box gap="12px" width={responsive.width}>
           {(countryStatus === 'pending' || countryStatus === 'failed') && (
-            <CountrySkeleton />
+            <CountrySkeleton responsive={responsive} />
           )}
           {countryStatus === 'failed' && (
             <Text color="error">
@@ -79,7 +90,7 @@ export const CountryScreen = () => {
             </Text>
           )}
           {countryStatus === 'succeeded' && (
-            <Box gap="48px" flexDirection="row">
+            <Box gap={responsive.gap} flexDirection={responsive.flexDirection}>
               <Box vCenter gap="8px">
                 <Text align="center" component="h1" variant="h1">
                   {country?.name.common}
@@ -136,12 +147,16 @@ export const CountryScreen = () => {
   );
 };
 
-const CountrySkeleton = () => {
+const CountrySkeleton: React.FC<{ responsive: IBox }> = ({ responsive }) => {
   return (
-    <Box gap="48px" flexDirection="row">
+    <Box gap={responsive.gap} flexDirection={responsive.flexDirection}>
       <Box hCenter gap="8px">
         <Skeleton variant="text" width="85px" height="34px" />
-        <Skeleton variant="rounded" width="320px" height="230px" />
+        <Skeleton
+          variant="rounded"
+          style={{ minWidth: '320px' }}
+          height="230px"
+        />
       </Box>
       <Box gap="12px">
         <Box>
