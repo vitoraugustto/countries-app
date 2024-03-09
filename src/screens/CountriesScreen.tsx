@@ -19,6 +19,9 @@ import { fetchCountry } from '@services/countries';
 export const CountriesScreen = () => {
   const navigate = useNavigate();
 
+  const [history, setHistory] = useState<string[]>(
+    JSON.parse(localStorage.getItem('history') ?? '[]'),
+  );
   const [countryName, setCountryName] = useState('');
   const [countries, setCountries] = useState<ICountry[]>([]);
   const [status, setStatus] = useState<Status>('idle');
@@ -26,7 +29,14 @@ export const CountriesScreen = () => {
     'grid',
   );
 
-  const history = JSON.parse(localStorage.getItem('history') ?? '[]');
+  const removeFromHistory = (historyItem: string) => {
+    const updatedHistory = history.filter(
+      (item: string) => item !== historyItem,
+    );
+
+    localStorage.setItem('history', JSON.stringify(updatedHistory));
+    setHistory(updatedHistory);
+  };
 
   const dataGridRows = countries.map((country) => ({
     id: country.name.common,
@@ -72,23 +82,21 @@ export const CountriesScreen = () => {
             />
           </Box>
         </Box>
-        <Box flexDirection="row" vCenter gap="14px">
+        <Box minHeight="36px" flexDirection="row" vCenter gap="14px">
           <HistoryIcon color="info" />
           {history.map((historyItem: string) => (
             <Chip
               color="info"
               variant="outlined"
-              onClick={() => handleFetchCountry(historyItem)}
               label={historyItem}
-              onDelete={() => {
-                const index = history.indexOf(historyItem);
-
-                if (index > -1) {
-                  history.splice(index, 1);
-
-                  localStorage.setItem('history', JSON.stringify(history));
+              onClick={() => {
+                if (countries.length > 0) {
+                  setCountries([]);
                 }
+
+                handleFetchCountry(historyItem);
               }}
+              onDelete={() => removeFromHistory(historyItem)}
             />
           ))}
         </Box>
@@ -97,19 +105,10 @@ export const CountriesScreen = () => {
             debouncedValue={(debouncedValue) => {
               if (!debouncedValue) return;
 
-              const history = JSON.parse(
-                localStorage.getItem('history') ?? '[]',
-              );
+              const updatedHistory = [debouncedValue, ...history.slice(0, 4)];
+              localStorage.setItem('history', JSON.stringify(updatedHistory));
 
-              if (history.length === 5) {
-                history.pop();
-              }
-
-              localStorage.setItem(
-                'history',
-                JSON.stringify([debouncedValue, ...history]),
-              );
-
+              setHistory(updatedHistory);
               handleFetchCountry(debouncedValue);
             }}
             fullWidth
@@ -152,6 +151,27 @@ export const CountriesScreen = () => {
           <CountryCards countries={countries} />
         )}
       </Box>
+    </Box>
+  );
+};
+
+const History: React.FC<{
+  history: string[];
+  onClick: (historyItem: string) => void;
+  onDelete: (historyItem: string) => void;
+}> = ({ history, onClick, onDelete }) => {
+  return (
+    <Box minHeight="36px" flexDirection="row" vCenter gap="14px">
+      <HistoryIcon color="info" />
+      {history.map((historyItem: string) => (
+        <Chip
+          color="info"
+          variant="outlined"
+          label={historyItem}
+          onClick={() => onClick(historyItem)}
+          onDelete={() => onDelete(historyItem)}
+        />
+      ))}
     </Box>
   );
 };
