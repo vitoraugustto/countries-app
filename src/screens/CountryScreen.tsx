@@ -31,6 +31,7 @@ export const CountryScreen = () => {
     width: isMobile ? '100%' : '60%',
     p: isMobile ? '6%' : '2%',
     gap: isMobile ? '12px' : '48px',
+    minWidth: isMobile ? '100%' : '320px',
   };
 
   const handleFetchCountry = () => {
@@ -151,10 +152,10 @@ const CountrySkeleton: React.FC<{ responsive: IBox }> = ({ responsive }) => {
   return (
     <Box gap={responsive.gap} flexDirection={responsive.flexDirection}>
       <Box hCenter gap="8px">
-        <Skeleton variant="text" width="85px" height="34px" />
+        <Skeleton variant="text" width="120px" height="34px" />
         <Skeleton
           variant="rounded"
-          style={{ minWidth: '320px' }}
+          style={{ minWidth: responsive.minWidth }}
           height="230px"
         />
       </Box>
