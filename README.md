@@ -1,30 +1,57 @@
-# React + TypeScript + Vite
+# Countries APP
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este é um aplicativo para visualização de informações sobre países.
 
-Currently, two official plugins are available:
+## Como rodar
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Pré-requisitos
 
-## Expanding the ESLint configuration
+- Instalar o node caso não possua, acessando o site: https://nodejs.org
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- Instalar o yarn caso não possua, via npm:
 
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+```bash
+  npm install --global yarn
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### Instalação
+
+- Clone este repositório para o seu ambiente local:
+
+```bash
+git clone https://github.com/vitoraugustto/countries-app.git
+```
+
+- Acesse o diretório do projeto:
+
+```bash
+cd countries-app
+```
+
+- Instale as depêndencias do projeto:
+
+```bash
+yarn install
+```
+
+### Variáveis de Ambiente:
+
+- Antes de rodar o projeto, é necessário configurar as seguintes variáveis de ambiente no arquivo`.env`:
+
+```bash
+VITE_REST_COUNTRIES_BASE_URL=
+
+VITE_OPENAI_API_KEY=
+VITE_OPENAI_REPLACE_KEY=
+VITE_OPENAI_CONTEXT=
+```
+
+### Rodar o servidor de desenvolvimento:
+
+- Para rodar o servidor, rode o seguinte comando:
+
+```bash
+yarn dev
+```
+
+Isso iniciará o servidor de desenvolvimento e você poderá acessar o aplicativo em http://localhost:5173 no seu navegador.
