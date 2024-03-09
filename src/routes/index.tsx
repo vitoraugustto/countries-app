@@ -5,12 +5,14 @@ import {
 } from 'react-router-dom';
 
 import { CountriesScreen } from '@screens/CountriesScreen';
+import { CountryScreen } from '@screens/CountryScreen';
 
 export const Routes = () => {
   return (
     <Router>
       <_Routes>
-        <Route path="/" element={<CountriesScreen />} />
+        <Route path="/paises" element={<CountriesScreen />} />
+        <Route path="/paises/:countryName" element={<CountryScreen />} />
       </_Routes>
     </Router>
   );

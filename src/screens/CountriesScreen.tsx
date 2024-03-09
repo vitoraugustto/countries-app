@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { ICountry, Status } from '@common/types';
 import {
+  encode,
   formatCapitals,
   formatCurrencies,
   formatLanguages,
@@ -14,6 +16,8 @@ import { fetchCountry } from '@services/countries';
 import { defaultTheme } from '@theme';
 
 export const CountriesScreen = () => {
+  const navigate = useNavigate();
+
   const [countryName, setCountryName] = useState('');
   const [countries, setCountries] = useState<ICountry[]>([]);
   const [status, setStatus] = useState<Status>('idle');
@@ -97,7 +101,9 @@ export const CountriesScreen = () => {
                 },
               }}
               rowSelection={false}
-              onRowClick={(params) => console.log(params)}
+              onRowClick={(params) =>
+                navigate(`/paises/${encode(params.row.name)}`)
+              }
               localeText={dataGridLocaleText}
               loading={status === 'pending'}
               pageSizeOptions={[10, 25, 50, 100]}
