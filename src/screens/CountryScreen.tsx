@@ -10,7 +10,7 @@ import {
 } from '@common/utils';
 import { Box, Text } from '@components';
 import CancelIcon from '@mui/icons-material/Cancel';
-import { Chip, CircularProgress, Divider } from '@mui/material';
+import { Chip, CircularProgress, Divider, Skeleton } from '@mui/material';
 import { fetchCountry, generateCountryCuriosities } from '@services/countries';
 
 export const CountryScreen = () => {
@@ -68,37 +68,42 @@ export const CountryScreen = () => {
   return (
     <Box hCenter vCenter gap="20px" p="2%" height="100vh">
       <Box gap="12px" width="60%">
-        <Box gap="28px" flexDirection="row">
-          <Box vCenter gap="8px">
-            <Text align="center" component="h1" variant="h1">
-              {country?.name.common}
-            </Text>
-            <img
-              style={{ borderRadius: '10px' }}
-              src={country?.flags.png}
-              alt={`Bandeira do país ${country?.name.common}`}
-            />
+        {countryStatus === 'pending' ? (
+          <CountrySkeleton />
+        ) : (
+          <Box gap="28px" flexDirection="row">
+            <Box vCenter gap="8px">
+              <Text align="center" component="h1" variant="h1">
+                {country?.name.common}
+              </Text>
+              <img
+                style={{ borderRadius: '10px' }}
+                src={country?.flags.png}
+                alt={`Bandeira do país ${country?.name.common}`}
+              />
+            </Box>
+            <Divider orientation="vertical" />
+            <Box gap="12px">
+              <CountryInfo
+                title="Capital"
+                text={country ? formatCapitals(country) : '-'}
+              />
+              <CountryInfo
+                title="População"
+                text={country ? country?.population : '-'}
+              />
+              <CountryInfo
+                title="Moeda"
+                text={country ? formatCurrencies(country) : '-'}
+              />
+              <CountryInfo
+                title="Idioma"
+                text={country ? formatLanguages(country) : '-'}
+              />
+            </Box>
           </Box>
-          <Divider orientation="vertical" />
-          <Box gap="12px">
-            <CountryInfo
-              title="Capital"
-              text={country ? formatCapitals(country) : '-'}
-            />
-            <CountryInfo
-              title="População"
-              text={country ? country?.population : '-'}
-            />
-            <CountryInfo
-              title="Moeda"
-              text={country ? formatCurrencies(country) : '-'}
-            />
-            <CountryInfo
-              title="Idioma"
-              text={country ? formatLanguages(country) : '-'}
-            />
-          </Box>
-        </Box>
+        )}
+
         <Box gap="12px">
           <Box vCenter flexDirection="row" gap="10px">
             <Text fontWeight="600">Curiosidades</Text>
@@ -117,6 +122,36 @@ export const CountryScreen = () => {
               importantes.
             </Text>
           )}
+        </Box>
+      </Box>
+    </Box>
+  );
+};
+
+const CountrySkeleton = () => {
+  return (
+    <Box gap="28px" flexDirection="row">
+      <Box hCenter gap="8px">
+        <Skeleton variant="text" width="85px" height="34px" />
+        <Skeleton variant="rounded" width="320px" height="230px" />
+      </Box>
+      <Divider orientation="vertical" />
+      <Box gap="12px">
+        <Box>
+          <Skeleton variant="text" width="65px" height="24px" />
+          <Skeleton variant="text" width="105px" height="32px" />
+        </Box>
+        <Box>
+          <Skeleton variant="text" width="75px" height="24px" />
+          <Skeleton variant="text" width="130px" height="32px" />
+        </Box>
+        <Box>
+          <Skeleton variant="text" width="60px" height="24px" />
+          <Skeleton variant="text" width="250px" height="32px" />
+        </Box>
+        <Box>
+          <Skeleton variant="text" width="75px" height="24px" />
+          <Skeleton variant="text" width="130px" height="32px" />
         </Box>
       </Box>
     </Box>
