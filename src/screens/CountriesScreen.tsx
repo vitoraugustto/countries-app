@@ -64,7 +64,13 @@ export const CountriesScreen = () => {
             />
           </Box>
         </Box>
-        <Box minHeight="36px" flexDirection="row" vCenter gap="14px">
+        <Box
+          minHeight="36px"
+          flexDirection="row"
+          style={{ flexWrap: 'wrap' }}
+          vCenter
+          gap="14px"
+        >
           <HistoryIcon color="info" />
           {history.map((historyItem: string, index) => (
             <Chip
