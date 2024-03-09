@@ -155,27 +155,6 @@ export const CountriesScreen = () => {
   );
 };
 
-const History: React.FC<{
-  history: string[];
-  onClick: (historyItem: string) => void;
-  onDelete: (historyItem: string) => void;
-}> = ({ history, onClick, onDelete }) => {
-  return (
-    <Box minHeight="36px" flexDirection="row" vCenter gap="14px">
-      <HistoryIcon color="info" />
-      {history.map((historyItem: string) => (
-        <Chip
-          color="info"
-          variant="outlined"
-          label={historyItem}
-          onClick={() => onClick(historyItem)}
-          onDelete={() => onDelete(historyItem)}
-        />
-      ))}
-    </Box>
-  );
-};
-
 const CountryCards: React.FC<{ countries: ICountry[] }> = ({ countries }) => {
   const navigate = useNavigate();
 
